@@ -34,7 +34,6 @@ class MemoryManager {
     $this->disable_file = $system_path . '/var/run/DreamHost_VPS_Memory_Manager/disable';
     $this->stop_file = $system_path . '/var/run/DreamHost_VPS_Memory_Manager/stop';
     $this->login_file = $system_path . '/var/run/login.php';
-    $this->cron_file = $system_path . '/var/run/cron.tmp';
     $this->db_file = $system_path . '/var/logs/flatfile';
     $this->temp_file = $system_path . '/var/logs/temp';
     $this->error_file = $system_path . '/var/logs/errors';
@@ -192,6 +191,7 @@ class MemoryManager {
   }
   
   function get_memory_log() {
+    $this->trim_logs();
     exec('tail -n 50 ' . $this->memory_log, $log);
     $log = array_reverse($log);
     foreach($log as $line) {
@@ -201,10 +201,6 @@ class MemoryManager {
   }
   
   function write_graph_log($time, $total_memory, $available_memory, $load_1, $load_2, $load_3) {
-    $number_of_lines = exec("wc -l " . $this->db_file . " | awk {'print $1'}");
-    if($number_of_lines >= "300") {
-      $this->delete_lines($this->db_file, 12);
-    }
 
     $log_content = $time . "000|" . $total_memory . "|" . $available_memory . "|" . $load_1 . "|" . $load_2 . "|" . $load_3;
     if (!$fh = fopen($this->db_file, 'a')) {
@@ -217,6 +213,23 @@ class MemoryManager {
       System_Daemon::info("Wrote to graph database: " . $log_content);
     }
     fclose($fh);
+  }
+
+  function trim_logs() {
+    $number_of_lines = exec("wc -l " . $this->db_file . " | awk {'print $1'}");
+    if($number_of_lines >= "300") {
+      $this->delete_lines($this->db_file, 12);
+    }
+    
+    $number_of_lines = exec("wc -l " . $this->error_file . " | awk {'print $1'}");
+    if($number_of_lines >= "1000") {
+      $this->delete_lines($this->error_file, 200);
+    }
+
+    $number_of_lines = exec("wc -l " . $this->memory_log . " | awk {'print $1'}");
+    if($number_of_lines >= "1000") {
+      $this->delete_lines($this->error_file, 200);
+    }
   }
 
   function delete_lines($file, $number_of_lines) {
