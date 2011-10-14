@@ -269,8 +269,8 @@ class MemoryManager {
     if(file_exists($this->pid_file)) {
       $pid = file_get_contents($this->pid_file);
       //when executing a command like below through php the proc count is always +1
-      $is_running = exec('ps aux | grep ' . $pid . ' | grep daemon.php | wc -l');
-      if($is_running > 0) { return true; } else { return false; }
+      $is_running = shell_exec('ps aux | grep ' . $pid . ' | grep daemon.php | wc -l');
+      if($is_running > 1) { return true; } else { return false; }
     } else {
       return false;
     }
