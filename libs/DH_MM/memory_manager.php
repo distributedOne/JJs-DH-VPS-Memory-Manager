@@ -79,7 +79,6 @@ class MemoryManager {
     }
     $command_list .= $cron_command;
     
-    $command_list .= " | <a href='?action=";
     $command_list .= " | <a href='?action=logout'>Logout</a>";
     
     $this->template->assign('command_list', $command_list);
