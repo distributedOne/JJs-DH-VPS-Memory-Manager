@@ -18,5 +18,6 @@ define('DAEMON_USER', '--DAEMON_USER--');
 define('DAEMON_GROUP', '--DAEMON_GROUP--');
 define('ALWAYS_USE_COMMITTED_AS', '--ALWAYS_USE_COMMITTED_AS--');
 define('LOG_ALL', '--LOG_ALL--');
+define('CHANGE_MEMORY', '--CHANGE_MEMORY--');
 
 ?>

@@ -527,7 +527,7 @@ class MemoryManager {
     }
   }
   
-  function write_config($api_key, $user, $pass, $salt, $email, $theme = "basic", $hostname = "false", $min_memory = "300", $max_memory = "4000", $safety_percent = "20", $use_committed_as = "false", $log_all = "false") {
+  function write_config($api_key, $user, $pass, $salt, $email, $theme = "basic", $hostname = "false", $min_memory = "300", $max_memory = "4000", $safety_percent = "20", $use_committed_as = "false", $log_all = "false", $change_memory = "true") {
     
     if($hostname == "false") {
       $hostname = exec('hostname');
@@ -551,6 +551,7 @@ class MemoryManager {
     $new_config = str_replace("--DAEMON_GROUP--", $user_info[1], $new_config);
     $new_config = str_replace("'--ALWAYS_USE_COMMITTED_AS--'", $use_committed_as, $new_config);
     $new_config = str_replace("'--LOG_ALL--'", $log_all, $new_config);
+    $new_config = str_replace("'--CHANGE_MEMORY--'", $change_memory, $new_config);
 
     $fh = fopen($this->config_file, 'w');
     if(fwrite($fh, $new_config) === FALSE) {
