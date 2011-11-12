@@ -51,7 +51,7 @@ body {
 	background: #fff;
 }
 #logo {
-	background-image:url('/images/logo.png');
+	background-image:url('../../../images/logo.png');
 	background-position:center;
 	background-repeat:no-repeat;
 	width:100%;
