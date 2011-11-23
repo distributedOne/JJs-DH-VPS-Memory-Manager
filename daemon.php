@@ -140,11 +140,11 @@ This limitation is built into the DreamHost API and is not a limitation of JJ's 
 You should monitor your memory usage and adjust accordingly from the DreamHost control panel.
 You should also consider optimization of your VPS Memory Manager configuration.
 
-Check out: http://www.gimmesoda.com/setup/an/faq
+Check out: http://www.gimmesoda.com/jjs-vps-memory-manager-faq/
 
 Don't forget that VPS and website optimizations can also be quite helpful:
 
-Check out: http://www.gimmesoda.com/setup/an/optimization/page
+Check out: http://www.gimmesoda.com/jjs-vps-and-site-optimization-suggestions/
 
 When tomorrow comes the memory manager will continue to perform adjustments as needed.
 If you'd like to contact JJ with any bugs or questions just respond to this email!", 'Reply-To: memory_manager@gimmesoda.com');
