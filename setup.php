@@ -1,6 +1,7 @@
 <?php
 
 $application_name = "JJ's VPS Memory Manager";
+$application_version = "beta3";
 
 if($_SERVER['SERVER_PORT'] == 443) { $protocol = "https"; } else { $protocol = "http"; }
 $system_url = $protocol . "://" . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
@@ -17,7 +18,7 @@ if($system_action != "install") {
     require($system_path . "/config.php");
   }
 } else { //Set the needed defines for install
-  define('TEMPLATE', 'basic'); //default template
+  define('TEMPLATE', 'amazing'); //default template
 }
 
 require($system_path . "/libs/DH_MM/memory_manager.php");

@@ -53,37 +53,37 @@ class MemoryManager {
 
     $daemon_disabled_status = $this->is_daemon_disabled();
     if($daemon_disabled_status == true) {
-      $daemon_command = '<a href="#" onClick="enable_daemon();">Re-enable Daemon</a>';
+      $daemon_command = '<a href="#" onClick="enable_daemon();"><div id="ReEnable"><img src="templates/amazing/images/reEnable.png" alt="re-enable" /><span>Re-enable Daemon</span></div></a>';
     } else {
-      $daemon_command = '<a href="#" onClick="disable_daemon();">Disable Daemon</a>';
+      $daemon_command = '<a href="#" onClick="disable_daemon();"><div id="Disable"><img src="templates/' . TEMPLATE . '/images/disable.png" alt="disable" /><span>Disable Daemon</span></div></a>';
     }
-    $command_list = $daemon_command . " | ";
+    $command_list = $daemon_command;
 
     $daemon_is_stopped = $this->is_daemon_running();
     if($daemon_is_stopped == false) {
-      $stop_command = '<strong>Daemon is NOT Running</strong>';
+      $stop_command = '<a href="#"><div id="Restart"><img src="templates/amazing/images/restart.png" alt="restart" /><span> Not Running</span></div></a>';
     } else {
-      $stop_command = '<strong>Daemon is Running (<a href="#" onClick="reload_daemon();">Restart</a>)</strong>';
+      $stop_command = '<a href="#" onClick="reload_daemon();"><div id="Restart"><img src="templates/amazing/images/restart.png" alt="restart" /><span>Restart Daemon</span></div></a>';
     }
-    $command_list  .= $stop_command . " | ";
+    $command_list  .= $stop_command;
 
-    $clear_logs_command = '<a href="#" onClick="clear_logs();">Clear Logs</a>';
-    $command_list .= $clear_logs_command . " | ";
+    $clear_logs_command = '<a href="#" onClick="clear_logs();"><div id="Clear"><img src="templates/amazing/images/clear.png" alt="clear" /><span>Clear All</span></div></a>';
+    $command_list .= $clear_logs_command;
 
     $crontab = new Gimme_Cron;
     $cron_installed = $crontab->find_line($this->cron_command);
     if($cron_installed == false) {
-        $cron_command = '<a href="#" onClick="install_cron();">Install Cron</a>';
+        $cron_command = '<a href="#" onClick="install_cron();"><div id="Cron"><img src="templates/amazing/images/cron.png" alt="cron" /><span>Install Cron</span></div></a>';
     } else {
-        $cron_command = '<a href="#" onClick="remove_cron();">Remove Cron</a>';
+        $cron_command = '<a href="#" onClick="remove_cron();"><div id="Cron"><img src="templates/amazing/images/cron.png" alt="cron" /><span>Remove Cron</span></div></a>';
     }
     $command_list .= $cron_command;
     
-    $command_list .= " | <a href='?action=logout'>Logout</a>";
+    $command_list .= '<a href="?action=logout"><div id="Logout"><img src="templates/amazing/images/logout.png" alt="logout" /><span>Logout</span></div></a>';
     
     $this->template->assign('command_list', $command_list);
   }
-  
+    
   function execute_menu_command($command) {
     switch($command) {
       case "clear_logs":
@@ -111,6 +111,10 @@ class MemoryManager {
 
       case "remove_cron":
         $this->remove_cron();
+      break;
+      
+      case "get_news":
+        echo $this->get_news();
       break;
       
       default:
@@ -191,7 +195,7 @@ class MemoryManager {
   
   function get_memory_log() {
     $this->trim_logs();
-    exec('tail -n 50 ' . $this->memory_log, $log);
+    exec('tail -n 17 ' . $this->memory_log, $log);
     $log = array_reverse($log);
     foreach($log as $line) {
       $final_log .= trim($line) . "<br />";
@@ -430,7 +434,7 @@ class MemoryManager {
   function setup_install() {
   	
 	if(file_exists($this->config_file)) {
-		$this->template->assign("message", 'A config.php file already exists. Delete it if you want to re-install.');
+		$this->template->assign("message", 'Delete config.php if you want to re-install.');
 	} else {
 	    switch ($this->module_action) {
 	      case "write":
@@ -460,24 +464,24 @@ class MemoryManager {
   	preg_match('/^[A-Z0-9]+$/', $key, $matches);
 	$key = $matches[0];
 	if(trim($key) == '') {
-		$this->template->assign("message", 'Your key is invalid! <a href="javascript:history.go(-1)">Go back</a> and fix it!');
+		$this->template->assign("message", 'Your API key is invalid!');
 		return false;
 	}
 
   	preg_match('/^[a-zA-Z0-9._-]+$/', $user, $matches);
 	$user = $matches[0];
 	if(trim($user) == '') {
-		$this->template->assign("message", 'Your username is invalid! Do not user special characters. <a href="javascript:history.go(-1)">Go back</a> and fix it!');
+		$this->template->assign("message", 'Your username is invalid! Do not user special characters.');
 		return false;
 	}
 
 	if($pass != $verify_pass) {
-		$this->template->assign("message", 'Your passwords do not match! <a href="javascript:history.go(-1)">Go back</a> and fix it!');
+		$this->template->assign("message", 'Your passwords do not match!');
 		return false;
 	}
 	
 	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		$this->template->assign("message", 'Your email address is invalid! <a href="javascript:history.go(-1)">Go back</a> and fix it!');
+		$this->template->assign("message", 'Your email address is invalid!');
 		return false;		
 	}
 
@@ -527,7 +531,7 @@ class MemoryManager {
     }
   }
   
-  function write_config($api_key, $user, $pass, $salt, $email, $theme = "basic", $hostname = "false", $min_memory = "300", $max_memory = "4000", $safety_percent = "20", $use_committed_as = "false", $log_all = "false", $change_memory = "true") {
+  function write_config($api_key, $user, $pass, $salt, $email, $theme = "amazing", $hostname = "false", $min_memory = "300", $max_memory = "4000", $safety_percent = "20", $use_committed_as = "false", $log_all = "false", $change_memory = "true") {
     
     if($hostname == "false") {
       $hostname = exec('hostname');
@@ -555,10 +559,10 @@ class MemoryManager {
 
     $fh = fopen($this->config_file, 'w');
     if(fwrite($fh, $new_config) === FALSE) {
-	  $this->template->assign("message", 'There was an error writing your config file. Check permissions. <a href="javascript:history.go(-1)">Go back</a> and fix it!');
+	  $this->template->assign("message", 'There was an error writing your config file. Check permissions.');
       return false;
     } else {
-	  $this->template->assign("message", 'Your config file has been written. Return to the <a href="index.php">main page</a> and login!');
+	  $this->template->assign("message", 'Success! Go to the <a href="index.php">login page</a>!');
       return true;
     }
   }
@@ -568,13 +572,13 @@ class MemoryManager {
   
   function check_login($user, $pass) {
   	if($user != USER) {
-	  $this->template->assign("message", 'Username not found! <a href="javascript:history.go(-1)">Go back</a> and fix it!');
+	  $this->template->assign("message", 'Username not found!');
   	  return false;
   	}
 
     $pass = md5(SALT . $pass);
   	if($pass != PASS) {
-	  $this->template->assign("message", 'Password incorrect! <a href="javascript:history.go(-1)">Go back</a> and fix it!');
+	  $this->template->assign("message", 'Password incorrect!');
   	  return false;
   	}
 	return true;
@@ -633,6 +637,32 @@ $login_array = array(
   }
   
   /* End Login Related Functions */
+  
+  /* News Related Functions */
+  
+  function get_news() {
+    global $application_version;
+    $curl_handle = curl_init();
+    
+    curl_setopt($curl_handle, CURLOPT_URL, "http://www.gimmesoda.com/mm_news.txt");
+    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl_handle, CURLOPT_HEADER, 0);
+    
+    $news_results = curl_exec($curl_handle);
+    $request_info = curl_getinfo($curl_handle);
+
+    //print_r($request_info);
+
+    if($request_info['http_code'] != 200) {
+       $news_results = "Unable to get latest news.";
+    }
+        
+    curl_close($curl_handle);
+    $curl_handle = null;
+
+    return "Running Version: $application_version | " . $news_results;
+  }
+  
 }
 
 ?>

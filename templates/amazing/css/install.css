@@ -1,0 +1,117 @@
+#install {
+	background-image: url('../images/installBackground.png');
+	background-repeat: norepeat;
+	width: 380px;
+	height: 410px;
+	padding: 0;
+	margin: 0;
+	position: relative;
+	margin: auto;
+}
+
+#installInput {
+	width: 380px;
+	height: 302px;
+	padding-top: 16px;
+	text-align: center;
+	font-size: 9pt;
+	font-weight: 400;
+	color: #a4a4a4;
+}
+
+#installInput span {
+	position: relative;
+	float: left;
+	left: 16px;
+}
+
+input[type="text"] {
+	margin: auto;
+	margin-bottom: 18px;
+	margin-top: 10px;
+	width: 336px;
+	height: 26px;
+	font-family: 'PT Sans';
+	padding: 0 0 0 10px;
+	border: 1px solid #cbcbcb;
+	/* White Drop Shadow */
+		-webkit-box-shadow: 0px 1px 0px 0px #FFFFFF;
+		-moz-box-shadow: 0px 1px 0px 0px #FFFFFF;
+		box-shadow: 0px 1px 0px 0px #FFFFFF;
+	/* Border Radius */
+		-webkit-border-radius: 2px;
+		-moz-border-radius: 2px;
+		border-radius: 2px;
+	/* Inner Shadow */
+		-webkit-box-shadow: inset 0px 1px 1px 0px #e5e5e5;
+		-moz-box-shadow: inset 0px 1px 1px 0px #e5e5e5;
+		box-shadow: inset 0px 1px 1px 0px #e5e5e5;
+}
+
+input[type="text"]:focus {
+	outline: none;
+	border: 1px solid #9cbfdf;
+}
+
+input[type="password"] {
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 18px;
+	width: 336px;
+	height: 26px;
+	font-family: 'PT Sans';
+	padding: 0 0 00 10px;
+	border: 1px solid #cbcbcb;
+	/* White Drop Shadow */
+		-webkit-box-shadow: 0px 1px 0px 0px #FFFFFF;
+		-moz-box-shadow: 0px 1px 0px 0px #FFFFFF;
+		box-shadow: 0px 1px 0px 0px #FFFFFF;
+	/* Border Radius */
+		-webkit-border-radius: 2px;
+		-moz-border-radius: 2px;
+		border-radius: 2px;
+	/* Inner Shadow */
+		-webkit-box-shadow: inset 0px 1px 1px 0px #e5e5e5;
+		-moz-box-shadow: inset 0px 1px 1px 0px #e5e5e5;
+		box-shadow: inset 0px 1px 1px 0px #e5e5e5;
+}
+
+input[type="password"]:focus {
+	outline: none;
+	border: 1px solid #9cbfdf;
+}
+
+button {
+	position: relative;
+	float: right;
+	top: -5px;
+	right: 16px;
+	width: 85px;
+	height: 20px;
+	border: 1px solid #4c8e24;
+	/* Border Radius */
+		-webkit-border-radius: 2px;
+		-moz-border-radius: 2px;
+		border-radius: 2px;
+	/* Gradient */
+		background: #69c133; /* Old browsers */
+		background: -moz-linear-gradient(top,  #69c133 0%, #4f9227 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#69c133), color-stop(100%,#4f9227)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  #69c133 0%,#4f9227 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  #69c133 0%,#4f9227 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  #69c133 0%,#4f9227 100%); /* IE10+ */
+		background: linear-gradient(top,  #69c133 0%,#4f9227 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#69c133', endColorstr='#4f9227',GradientType=0 ); /* IE6-9 */
+	font-family: 'PT Sans';
+	font-weight: 700;
+	color: #FFFFFF;
+	/* Text Shadow */
+		text-shadow: 0px 1px 0px #2c5216;
+		filter: dropshadow(color=#2c5216, offx=0, offy=1);
+}
+
+p {
+	float: left;
+	position: relative;
+	left: 16px;
+}

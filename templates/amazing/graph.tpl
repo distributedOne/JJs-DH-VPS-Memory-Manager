@@ -1,6 +1,4 @@
-              <h1>Memory and Load Graph</h1>
               <div align="center"><div id="thegraph" style="width: 750px; height: 400px;"></div></div>
-              <div>In the graph above, click and drag your cursor to zoom in.</div>
               <script id=source language=javascript type="text/javascript">
                 {$am}
                 {$tm}
