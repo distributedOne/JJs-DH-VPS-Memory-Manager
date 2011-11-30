@@ -26,6 +26,7 @@ Configuration
 Once installed you should fine tune the application configuration. Let's look at the important values in the config.php file:
 
 define('MIN_MEMORY', '300');
+
 define('MAX_MEMORY', '4000');
 
 MIN_MEMORY should be the minimum memory your VPS uses. 300 is default only because that is the lowest amount of memory you are allowed to use, change this to something more realistic.
@@ -45,8 +46,13 @@ Credits and Thanks
 Many thanks to the various people who have contributed their time and efforts in getting this application tested, released, and themed. In no particular order:
 
 DreamHost: For giving me such an amazing career that I want to work on things like this in my free time.
+
 GY'ers: An extended family, thanks for putting up with all the rants and ramblings about VPS services and everything else!
+
 Tyler Brekke: Theme development/implementation, and an awesome co-worker.
+
 Kan Adachi: Thanks for putting your amazing skills to work and making this such a polished looking product.
+
 Samuel Corral: Testing and encouragement from my earliest versions, another amazing co-worker.
+
 Sarah Galvez: Even after all these years, you still put up (and love me) while so much of my free time is spent on development. <3
