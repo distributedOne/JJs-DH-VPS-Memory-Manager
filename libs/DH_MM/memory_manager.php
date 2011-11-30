@@ -227,7 +227,7 @@ class MemoryManager {
 
     $number_of_lines = exec("wc -l " . $this->memory_log . " | awk {'print $1'}");
     if($number_of_lines >= "1000") {
-      $this->delete_lines($this->error_file, 200);
+      $this->delete_lines($this->memory_log, 200);
     }
   }
 
