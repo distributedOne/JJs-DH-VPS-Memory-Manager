@@ -18,7 +18,7 @@
 			</div>
 			<form action="index.php" method="POST">
 				<div id="installInput">
-					<span>DreamHost API Key:</span><input type="text" id="dh_api_key" name="dh_api_key" value="{$apikey}"/>
+					<span>DreamHost <a href="https://panel.dreamhost.com/index.cgi?tree=home.api&" target="_blank">API Key</a>:</span><input type="text" id="dh_api_key" name="dh_api_key" value="{$apikey}"/>
 					<span>Choose a Username:</span><input type="text" name="username" id="username" value="{$username}" />
 					<span>Create Password:</span><input type="password" name="password1" id="password1" value="{$password1}" />
 					<span>Repeat Password:</span><input type="password" name="password2" id="password2" value="" />
