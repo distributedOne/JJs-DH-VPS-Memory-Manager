@@ -55,4 +55,7 @@ if($system_action == 'index') {
   $template->assign("index", "true");
 }
 
+header('Cache-Control: no-cache');
+header('Pragma: no-cache');
+
 ?>
