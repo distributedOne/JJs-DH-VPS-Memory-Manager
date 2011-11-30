@@ -45,7 +45,7 @@ Credits and Thanks
 
 Many thanks to the various people who have contributed their time and efforts in getting this application tested, released, and themed. In no particular order:
 
-DreamHost: For giving me such an amazing career that I want to work on things like this in my free time.
+DreamHost: For giving me such an amazing career that I want to work on things like this on my free time.
 
 GY'ers: An extended family, thanks for putting up with all the rants and ramblings about VPS services and everything else!
 
