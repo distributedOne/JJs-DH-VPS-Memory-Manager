@@ -1,7 +1,7 @@
 <?php
 
 $application_name = "JJ's VPS Memory Manager";
-$application_version = "beta3";
+$application_version = "v1.0";
 
 if($_SERVER['SERVER_PORT'] == 443) { $protocol = "https"; } else { $protocol = "http"; }
 $system_url = $protocol . "://" . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
