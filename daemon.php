@@ -23,7 +23,7 @@ if($memory_manager->is_daemon_disabled())
     die('Memory manager is disabled!' . "\n");
 
 if($memory_manager->is_daemon_running())
-    die('Memory manager is already running!' . "\n");
+    die();
 
 date_default_timezone_set("America/Los_Angeles"); //Use DreamHost TZ!
  
