@@ -592,15 +592,15 @@ class MemoryManager {
 
   function set_login_file($key) {
   	global $system_url;
-  	if(file_exists($this->login_file)) {
-		require($this->login_file);
-	}
 	$current_time = time();
 	$expiration_time = $current_time + 86400;
-	foreach($login_array as $array) {
-		if($current_time < $array['timeout']){
-			$new_login_array .= 'array("key" => \'' . $array['key'] . '\', "timeout" => ' . $array['timeout'] . '),' . "\n";
-		}
+  	if(file_exists($this->login_file)) {
+		require($this->login_file);
+    	foreach($login_array as $array) {
+    		if($current_time < $array['timeout']){
+    			$new_login_array .= 'array("key" => \'' . $array['key'] . '\', "timeout" => ' . $array['timeout'] . '),' . "\n";
+    		}
+    	}
 	}
 	$new_login_array .= 'array("key" => \'' . $key . '\', "timeout" => ' . $expiration_time . ')';
   	$file_contents = '<?php 
