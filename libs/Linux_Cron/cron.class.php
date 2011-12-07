@@ -35,7 +35,7 @@ class Gimme_Cron {
     public function add_line($add) {
 
         $this->get_cron_value();
-        $output = self::$cron_contents . "\n" . $add . "\n";
+        $output = self::$cron_contents . "\n" . $add;
 
         if(file_put_contents(self::$cron_tmp, $output) === false) {
             return false;
@@ -62,7 +62,7 @@ class Gimme_Cron {
         if(file_put_contents(self::$cron_tmp, $output) === false) {
             return false;
         } else {
-            exec(self::$cron_bin . " -r " . self::$cron_tmp);
+            exec(self::$cron_bin . " " . self::$cron_tmp);
         }
 
         return $output;
