@@ -35,7 +35,7 @@ class Gimme_Cron {
     public function add_line($add) {
 
         $this->get_cron_value();
-        $output = self::$cron_contents . "\n" . $add;
+        $output = self::$cron_contents . "\n" . $add . "\n";
 
         if(file_put_contents(self::$cron_tmp, $output) === false) {
             return false;
