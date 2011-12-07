@@ -342,12 +342,14 @@ class MemoryManager {
     $suggest = round($used_memory + ($used_memory * (SAFETY_PERCENT / 100)));
 
     //For servers using lots of cache
-    $cached_memory = $this->get_cached_memory();
-    $cached_suggest = round($cached_memory + ($cached_memory * (SAFETY_PERCENT / 100)));
-    
-    //Go for the higher memory requirement in this case
-    if($cached_suggest > $suggest) {
-      $suggest = $cached_suggest;
+    if(IGNORE_CACHE != true) {
+      $cached_memory = $this->get_cached_memory();
+      $cached_suggest = round($cached_memory + ($cached_memory * (SAFETY_PERCENT / 100)));
+
+      //Go for the higher memory requirement in this case
+      if($cached_suggest > $suggest) {
+        $suggest = $cached_suggest;
+      }
     }
     
     /**
@@ -531,7 +533,7 @@ class MemoryManager {
     }
   }
   
-  function write_config($api_key, $user, $pass, $salt, $email, $theme = "amazing", $hostname = "false", $min_memory = "300", $max_memory = "4000", $safety_percent = "20", $use_committed_as = "false", $log_all = "false", $change_memory = "true") {
+  function write_config($api_key, $user, $pass, $salt, $email, $theme = "amazing", $hostname = "false", $min_memory = "300", $max_memory = "4000", $safety_percent = "20", $use_committed_as = "false", $log_all = "false", $change_memory = "true", $ignore_cache = "false") {
     
     if($hostname == "false") {
       $hostname = exec('hostname');
@@ -556,6 +558,7 @@ class MemoryManager {
     $new_config = str_replace("'--ALWAYS_USE_COMMITTED_AS--'", $use_committed_as, $new_config);
     $new_config = str_replace("'--LOG_ALL--'", $log_all, $new_config);
     $new_config = str_replace("'--CHANGE_MEMORY--'", $change_memory, $new_config);
+    $new_config = str_replace("'--IGNORE_CACHE--'", $ignore_cache, $new_config);
 
     $fh = fopen($this->config_file, 'w');
     if(fwrite($fh, $new_config) === FALSE) {
