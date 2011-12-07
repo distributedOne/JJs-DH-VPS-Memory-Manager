@@ -397,12 +397,12 @@ class MemoryManager {
   }
   
   function get_cached_memory() {
-    $cached_memory = exec("grep Cached /proc/meminfo | awk {'print $2'};");
+    $cached_memory = exec("grep '^Cached:' /proc/meminfo | awk {'print $2'};") / 1024;
     return $cached_memory;
   }
   
   function get_used_memory() {
-    $used_memory = round(($this->get_total_memory() - $this->get_free_memory()));
+    $used_memory = round((($this->get_total_memory() - $this->get_free_memory()) - $this->get_cached_memory()));
     return $used_memory;
   }
   
