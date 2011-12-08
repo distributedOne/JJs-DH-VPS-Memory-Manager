@@ -207,11 +207,11 @@ class MemoryManager {
 
     $log_content = $time . "000|" . $total_memory . "|" . $available_memory . "|" . $load_1 . "|" . $load_2 . "|" . $load_3;
     if (!$fh = fopen($this->db_file, 'a')) {
-      System_Daemon::emerg("Cannot open file: $flatdb");
+      System_Daemon::emerg("Cannot open file: " . $this->db_file);
     }
   
     if (fwrite($fh, $log_content . "\n") === FALSE) {
-      System_Daemon::emerg("Cannot write to file: $flatdb");
+      System_Daemon::emerg("Cannot write to file: " .  $this->db_file);
     } else {
       System_Daemon::info("Wrote to graph database: " . $log_content);
     }
