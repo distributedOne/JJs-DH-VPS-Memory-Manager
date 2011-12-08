@@ -19,6 +19,7 @@ class MemoryManager {
   private $db_file;
   private $error_file;
   private $temp_file;
+  private $process_file;
   private $memory_log;
   private $pid_file;
   private $config_file;
@@ -38,6 +39,7 @@ class MemoryManager {
     $this->temp_file = $system_path . '/var/logs/temp';
     $this->error_file = $system_path . '/var/logs/errors';
     $this->memory_log = $system_path . '/var/logs/memory';
+    $this->process_file = $system_path . '/var/logs/processes';
     $this->pid_file = $system_path . '/var/run/DreamHost_VPS_Memory_Manager/DreamHost_VPS_Memory_Manager.pid';
     $this->config_file = $system_path . '/config.php';
     $this->config_sample_file = $system_path . '/config_sample.php';
@@ -116,7 +118,7 @@ class MemoryManager {
       case "get_news":
         echo $this->get_news();
       break;
-      
+            
       default:
         //Do Nothing!
       break;
@@ -191,6 +193,7 @@ class MemoryManager {
     exec("echo '' > " . $this->temp_file);
     exec("echo '' > " . $this->memory_log);
     exec("echo '' > " . $this->error_file);
+    exec("echo '' > " . $this->process_file);
   }
   
   function get_memory_log() {
@@ -217,6 +220,32 @@ class MemoryManager {
     }
     fclose($fh);
   }
+  
+  function write_process_log($suggestion, $used_memory, $cache_memory) {
+  
+    $datetime = date(DATE_RFC822);
+    $log_content  = $datetime . "\n";
+    $log_content .= "Used Memory: " . $used_memory . "\n";
+    $log_content .= "Suggested Memory: " . $suggestion . "\n";
+    $log_content .= "Cache Memory: " . $cache_memory . "\n";
+    $log_content .= "========================\n";
+    exec("ps -eF | grep -v CMD | sort -k6 -r", $ps);
+    foreach($ps as $line) {
+      $log_content .= trim($line) . "\n";
+    }
+    
+    if (!$fh = fopen($this->process_file, 'a')) {
+      System_Daemon::emerg("Cannot open file: " . $this->process_file);
+    }
+  
+    if (fwrite($fh, $log_content . "\n") === FALSE) {
+      System_Daemon::emerg("Cannot write to file: " . $this->process_file);
+    } else {
+      System_Daemon::info("Wrote to <a href='var/logs/processes' target='_blank'>process log</a>!");
+    }
+    fclose($fh);
+
+  }
 
   function trim_logs() {
     $number_of_lines = exec("wc -l " . $this->db_file . " | awk {'print $1'}");
@@ -233,6 +262,12 @@ class MemoryManager {
     if($number_of_lines >= "1000") {
       $this->delete_lines($this->memory_log, 200);
     }
+
+    $number_of_lines = exec("wc -l " . $this->process_file . " | awk {'print $1'}");
+    if($number_of_lines >= "1000") {
+      $this->delete_lines($this->process_file, 200);
+    }
+
   }
 
   function delete_lines($file, $number_of_lines) {
@@ -345,11 +380,14 @@ class MemoryManager {
     if(IGNORE_CACHE != true) {
       $cached_memory = $this->get_cached_memory();
       $cached_suggest = round($cached_memory + ($cached_memory * (SAFETY_PERCENT / 100)));
-
-      //Go for the higher memory requirement in this case
-      if($cached_suggest > $suggest) {
-        $suggest = $cached_suggest;
-      }
+    } else {
+      $used_memory = $this->get_used_memory() - $this->get_cached_memory();
+      $suggest = round($used_memory + ($used_memory * (SAFETY_PERCENT / 100)));
+    }
+    
+    //Go for the higher memory requirement in this case
+    if($cached_suggest > $suggest) {
+      $suggest = $cached_suggest;
     }
     
     /**
@@ -397,12 +435,13 @@ class MemoryManager {
   }
   
   function get_cached_memory() {
-    $cached_memory = exec("grep '^Cached:' /proc/meminfo | awk {'print $2'};") / 1024;
+    $cached_memory = exec("grep '^Cached:' /proc/meminfo | awk {'print $2'};");
+    $cached_memory = round(($cached_memory / 1024), 0);
     return $cached_memory;
   }
   
   function get_used_memory() {
-    $used_memory = round((($this->get_total_memory() - $this->get_free_memory()) - $this->get_cached_memory()));
+    $used_memory = round(($this->get_total_memory() - $this->get_free_memory()));
     return $used_memory;
   }
   

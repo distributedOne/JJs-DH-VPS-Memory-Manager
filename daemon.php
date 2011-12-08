@@ -66,6 +66,7 @@ while (!System_Daemon::isDying() && !$stopFileFound) {
   $suggestion = $memory_manager->suggest_memory();
   $totalMemory = $memory_manager->get_total_memory();
   $usedMemory = $memory_manager->get_used_memory();
+  $cacheMemory = $memory_manager->get_cached_memory();
   $load_averages = $memory_manager->get_load_average();
   $availableMemory = $totalMemory - $usedMemory;
   $type = ($suggestion > $totalMemory) ? 'increase' : 'decrease';
@@ -94,6 +95,7 @@ while (!System_Daemon::isDying() && !$stopFileFound) {
   	    if((($time > ($last_resize + (60 * 30))) && $type = 'decrease') || ($suggestion > $totalMemory)) { 
   	
     		  System_Daemon::info('Change is requested. Current Memory: %s Used: %s Suggestion: %s', $totalMemory, $usedMemory, $suggestion);
+              $memory_manager->write_process_log($suggestion, $usedMemory, $cacheMemory);
   		  
     		  if($vps_commands->set_size(HOSTNAME, $suggestion)) {
   	
