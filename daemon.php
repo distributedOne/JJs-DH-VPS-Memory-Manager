@@ -99,7 +99,7 @@ while (!System_Daemon::isDying() && !$stopFileFound) {
   		  
     		  if($vps_commands->set_size(HOSTNAME, $suggestion)) {
   	
-            $checks = 0;
+                $checks = 0;
     		    $status = false;
     		  	
     		    $results = $vps_commands->get_final_results();
