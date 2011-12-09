@@ -33,6 +33,19 @@ MIN_MEMORY should be the minimum memory your VPS uses. 300 is default only becau
 
 MAX_MEMORY should be a maximum amount of memory you are willing to pay for, remember that the memory manager will only resize to this level if the memory is actually needed. You are not likely to be at this level of memory usage for long periods of time, if you are go buy a dedicated instead.
 
+EMAIL_ON_RESIZE: Do you want to be emailed on resize? Set to true if you do!
+
+TWEET_ON_RESIZE: Do you want the application to send a tweet on resize? Set to true and fill out the following variables if you do!
+
+TWEET_CONSUMER_KEY
+TWEET_CONSUMER_SECRET
+TWEET_OAUTH_TOKEN
+TWEET_OAUTH_SECRET
+
+You will need to register with Twitter to get the needed values to these variables: https://dev.twitter.com/apps/new
+
+When you register make sure that your selected access level's are set to "Read and write".
+
 Restart the Daemon
 -----------------
 
