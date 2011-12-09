@@ -149,7 +149,7 @@ Don't forget that VPS and website optimizations can also be quite helpful:
 Check out: http://www.gimmesoda.com/jjs-vps-and-site-optimization-suggestions/
 
 When tomorrow comes the memory manager will continue to perform adjustments as needed.
-If you'd like to contact JJ with any bugs or questions just respond to this email!", 'Reply-To: memory_manager@gimmesoda.com');
+If you'd like to contact JJ with any bugs or questions just respond to this email!", 'Reply-To: jj@gimmesoda.com');
       			  $long_sleep = true;
 
             } else {
