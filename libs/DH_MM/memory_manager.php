@@ -241,7 +241,7 @@ class MemoryManager {
     if (fwrite($fh, $log_content . "\n") === FALSE) {
       System_Daemon::emerg("Cannot write to file: " . $this->process_file);
     } else {
-      System_Daemon::info("Wrote to <a href='var/logs/processes' target='_blank'>process log</a>!");
+      System_Daemon::info("Wrote to process log!");
     }
     fclose($fh);
 
