@@ -125,8 +125,9 @@ while (!System_Daemon::isDying() && !$stopFileFound) {
     		    }
 			
     		    if($status == 'success') {
-              $last_resize = time();
-    			    $last_type = ($suggestion > $totalMemory) ? 'increase' : 'decrease';
+                    $last_resize = time();
+                    $last_type = ($suggestion > $totalMemory) ? 'increase' : 'decrease';
+                    $memory_manager->communicate($totalMemory, $suggestion);
     		    }
 			
     		  } else {
