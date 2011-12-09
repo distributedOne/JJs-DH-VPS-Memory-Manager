@@ -572,7 +572,7 @@ class MemoryManager {
     }
   }
   
-  function write_config($api_key, $user, $pass, $salt, $email, $theme = "amazing", $hostname = "false", $min_memory = "300", $max_memory = "4000", $safety_percent = "20", $use_committed_as = "false", $log_all = "false", $change_memory = "true", $ignore_cache = "false") {
+  function write_config($api_key, $user, $pass, $salt, $email, $theme = "amazing", $hostname = "false", $min_memory = "300", $max_memory = "4000", $safety_percent = "20", $use_committed_as = "false", $log_all = "false", $change_memory = "true", $ignore_cache = "false", $email_on_resize = "false", $tweet_on_resize = "false", $tweet_consumer_key = "", $tweet_consumer_secret = "", $tweet_oauth_token = "", $tweet_oauth_secret = "") {
     
     if($hostname == "false") {
       $hostname = exec('hostname');
@@ -598,6 +598,12 @@ class MemoryManager {
     $new_config = str_replace("'--LOG_ALL--'", $log_all, $new_config);
     $new_config = str_replace("'--CHANGE_MEMORY--'", $change_memory, $new_config);
     $new_config = str_replace("'--IGNORE_CACHE--'", $ignore_cache, $new_config);
+    $new_config = str_replace("'--EMAIL_ON_RESIZE--'", $email_on_resize, $new_config);
+    $new_config = str_replace("'--TWEET_ON_RESIZE--'", $tweet_on_resize, $new_config);
+    $new_config = str_replace("--TWEET_CONSUMER_KEY--", $tweet_consumer_key, $new_config);
+    $new_config = str_replace("--TWEET_CONSUMER_SECRET--", $tweet_consumer_secret, $new_config);
+    $new_config = str_replace("--TWEET_OAUTH_TOKEN--", $tweet_oauth_token, $new_config);
+    $new_config = str_replace("--TWEET_OAUTH_SECRET--", $tweet_oauth_secret, $new_config);
 
     $fh = fopen($this->config_file, 'w');
     if(fwrite($fh, $new_config) === FALSE) {
