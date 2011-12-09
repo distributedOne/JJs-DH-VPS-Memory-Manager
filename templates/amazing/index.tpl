@@ -131,7 +131,7 @@
         	<div id="logIcon" onclick="javascript:show_hide_logs();"><img src="templates/amazing/images/view_log.png"><span id="viewLog">Review Logs</span></div>
         <p><div id="daemonLog">Loading Daemon Log....
         </div></p>
-        <span id="logLink"><a href="var/logs/memory" target="_blank">Memory Manager Log</a></span>
+        <span id="logLink"><a href="var/logs/memory" target="_blank">Memory Manager Log</a> | <a href='var/logs/processes' target='_blank'>Process Log</a></span>
         </div>
 </body>
 </html>
