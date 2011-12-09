@@ -711,6 +711,8 @@ $login_array = array(
     return "Running Version: $application_version | " . $news_results;
   }
   
+  /* End News Related Functions */
+  
 }
 
 ?>
