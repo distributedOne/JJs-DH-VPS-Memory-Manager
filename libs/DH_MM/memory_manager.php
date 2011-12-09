@@ -713,6 +713,29 @@ $login_array = array(
   
   /* End News Related Functions */
   
+  /* Communication Functions */
+  
+  function communicate($old_memory, $new_memory) {
+    global $system_path;
+    $message = "The VPS " . HOSTNAME . " has been resized from " . $old_memory . "MB to " . $new_memory . "MB";
+    if(EMAIL_ON_RESIZE == true) {
+      mail(EMAIL, HOSTNAME . ": Server Resized to " . $new_memory . "MB", $message . "
+If you'd like to contact JJ with any bugs or questions just respond to this email!", 'Reply-To: jj@gimmesoda.com');
+    }
+
+    if(TWEET_ON_RESIZE == true) {
+      require($system_path . "/libs/Twitter_OAuth/twitteroauth.php");
+
+      $tweet = new TwitterOAuth(TWEET_CONSUMER_KEY, TWEET_CONSUMER_SECRET, TWEET_OAUTH_TOKEN, TWEET_OAUTH_SECRET);
+      $tweet->useragent = "JJ's VPS Memory Manager";
+
+      $tweet->post('statuses/update', array('status' => $message));
+    }
+
+  }
+  
+  /* End Communication Functions */
+  
 }
 
 ?>
