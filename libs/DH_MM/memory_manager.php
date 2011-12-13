@@ -373,11 +373,11 @@ class MemoryManager {
   }
   
   function suggest_memory() {
-    $used_memory = $this->get_used_memory();
-    $suggest = round($used_memory + ($used_memory * (SAFETY_PERCENT / 100)));
+    //For servers using lots of cache (default)
+    if(IGNORE_CACHE == false) {
+      $used_memory = $this->get_used_memory();
+      $suggest = round($used_memory + ($used_memory * (SAFETY_PERCENT / 100)));
 
-    //For servers using lots of cache
-    if(IGNORE_CACHE != true) {
       $cached_memory = $this->get_cached_memory();
       $cached_suggest = round($cached_memory + ($cached_memory * (SAFETY_PERCENT / 100)));
     } else {
