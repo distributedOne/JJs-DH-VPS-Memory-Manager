@@ -84,6 +84,8 @@ while (!System_Daemon::isDying() && !$stopFileFound) {
     $memory_manager->write_graph_log($time, $totalMemory, $availableMemory, $load_averages[0], $load_averages[1], $load_averages[2]);
     $next_time = $time + (60 * 5);
   }
+  
+  $memory_manager->trim_logs();
 
   if($long_sleep == false) {
 
