@@ -4,10 +4,10 @@
     <title>{$application_name}</title>
 	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <link type="text/css" rel=stylesheet href="templates/amazing/css/style.css"/>
-    <script type="text/javascript" src="libs/javascript/jquery/1.4.4/jquery.min.js"></script>
+    <script type="text/javascript" src="libs/javascript/flot/jquery.min.js"></script>
     <script type="text/javascript" src="libs/javascript/flot/jquery.flot.js"></script>
     <script type="text/javascript" src="libs/javascript/flot/jquery.flot.selection.js"></script>
-    <!--[if IE]><script language="javascript" type="text/javascript" src="/templates/wheretohost/js/excanvas.pack.js"></script><![endif]-->
+    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="libs/javascript/flot/excanvas.min.js"></script><![endif]-->
     <script type="text/javascript">
         {literal}
         var toggle = "hide";
