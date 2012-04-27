@@ -1,5 +1,6 @@
 ## 1.1.2 (2012-04-27)
 * extra: removed work around for the now valid api.dreamhost.com cert
+* extra: readme updated to explain SAFETY_PERCENTAGE
 
 ## 1.1.1 (2012-04-14)
 * bugfix: daemon now cleans log
