@@ -1,8 +1,11 @@
+## 1.1.2 (2012-04-27)
+* extra: removed work around for the now valid api.dreamhost.com cert
+
 ## 1.1.1 (2012-04-14)
 * bugfix: daemon now cleans log
 * bugfix: properly loading excanvas for IE
 * extra: consolidated jquery/flot files
-* extra: updated flot library
+* extra: updated flot library	
 * workaround: ignoring expired api.dreamhost.com cert
 
 ## 1.1.0 (2011-12-09)

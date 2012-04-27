@@ -173,8 +173,7 @@ class DreamHost_API {
     curl_setopt($curl_handle, CURLOPT_URL, self::$final_url);
     curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl_handle, CURLOPT_HEADER, 0);
-    curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false); //Ignore expired cert :/
-    
+   
     $api_results = curl_exec($curl_handle);
     $request_info = curl_getinfo($curl_handle);
 
