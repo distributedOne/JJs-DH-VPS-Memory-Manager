@@ -578,8 +578,6 @@ class MemoryManager {
       $hostname = exec('hostname');
     }
 
-    $user_info = explode("|", exec("whoami | awk {'print \"grep \" $1 \" /etc/passwd\"'} | sh | awk -F: {'print $3 \"|\" $4'}"));
-    
     $sample_config = file_get_contents($this->config_sample_file);
 
     $new_config = str_replace("--DHAPIKEY--", $api_key, $sample_config); //Update sample first
@@ -592,8 +590,8 @@ class MemoryManager {
     $new_config = str_replace("--MIN_MEMORY--", $min_memory, $new_config);
     $new_config = str_replace("--MAX_MEMORY--", $max_memory, $new_config);
     $new_config = str_replace("'--SAFETY_PERCENT--'", $safety_percent, $new_config);
-    $new_config = str_replace("--DAEMON_USER--", $user_info[0], $new_config);
-    $new_config = str_replace("--DAEMON_GROUP--", $user_info[1], $new_config);
+    $new_config = str_replace("--DAEMON_USER--", posix_getuid(), $new_config);
+    $new_config = str_replace("--DAEMON_GROUP--", posix_getgid(), $new_config);
     $new_config = str_replace("'--ALWAYS_USE_COMMITTED_AS--'", $use_committed_as, $new_config);
     $new_config = str_replace("'--LOG_ALL--'", $log_all, $new_config);
     $new_config = str_replace("'--CHANGE_MEMORY--'", $change_memory, $new_config);
