@@ -1,3 +1,7 @@
+## 1.1.3 (2012-07-24)
+* bugfix: uid/gid was being set incorrectly in some rare cases
+* extra: formatting fixes
+
 ## 1.1.2 (2012-04-27)
 * extra: removed work around for the now valid api.dreamhost.com cert
 * extra: readme updated to explain SAFETY_PERCENTAGE
