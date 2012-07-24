@@ -11,8 +11,8 @@
  * @package JJ's VPS Memory Manager
  * 
  */
- 
- require("setup.php");
+
+require("setup.php");
 
 if(!$memory_manager->is_logged_in() && $system_action != 'install') {
 	$system_action = 'login';
@@ -27,15 +27,15 @@ if($memory_manager->is_daemon_running() == false) {
 switch($system_action) {
 
   case "commands":
-    if($module_action) {
-      $memory_manager->execute_menu_command($module_action);
-    } else {
-      $memory_manager->get_command_list();
-    }
+  if($module_action) {
+    $memory_manager->execute_menu_command($module_action);
+  } else {
+    $memory_manager->get_command_list();
+  }
   break;
 
   case "install":
-    $memory_manager->setup_install();
+  $memory_manager->setup_install();
   break;
 
   case "index":
@@ -43,7 +43,7 @@ switch($system_action) {
   break;
 
   case "graph":
-    $memory_manager->get_graph_data();
+  $memory_manager->get_graph_data();
   break;
   
   case "config":
@@ -51,30 +51,30 @@ switch($system_action) {
   break;
   
   case "memory_log":
-    $memory_manager->get_memory_log();
+  $memory_manager->get_memory_log();
   break;
   
   case "login":
-    if($module_action == 'login') {
-  	  if($memory_manager->check_login($_POST['username'], $_POST['password'])) {
-  	  	$memory_manager->set_logged_in();
-		header("Location: $system_url");
-  	  } else {
-		setcookie('logged_in', '', time() - 360);
-  	  }
+  if($module_action == 'login') {
+    if($memory_manager->check_login($_POST['username'], $_POST['password'])) {
+      $memory_manager->set_logged_in();
+      header("Location: $system_url");
+    } else {
+      setcookie('logged_in', '', time() - 360);
     }
+  }
 	//Show the login
   break;
-  
+
   case "logout":
-	setcookie('logged_in', '', time() - 360);
-	header("Location: $system_url");
+  setcookie('logged_in', '', time() - 360);
+  header("Location: $system_url");
   break;
-  
+
   default:
     //Show an error
-    $system_action = "error";
-    $template->assign('message','A valid action should be provided.');
+  $system_action = "error";
+  $template->assign('message','A valid action should be provided.');
   break;
 
 }

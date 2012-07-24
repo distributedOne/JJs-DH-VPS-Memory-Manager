@@ -31,22 +31,22 @@ $template = new Smarty_DH_VPS_MM;
 $memory_manager = new MemoryManager;
 
 $options = array(
-    'appName' => 'DreamHost_VPS_Memory_Manager',
-    'appDir' => dirname(__FILE__),
-    'appDescription' => 'Monitors and manages memory for a DreamHost Web VPS.',
-    'authorName' => 'JuanJose Galvez',
-    'authorEmail' => 'jj@gimmesoda.com',
-    'sysMaxExecutionTime' => '0',
-    'sysMaxInputTime' => '0',
-    'sysMemoryLimit' => '128M',
-    'logLocation' => $system_path . "/var/logs/memory",
-    'appPidLocation' => $system_path . "/var/run/DreamHost_VPS_Memory_Manager/DreamHost_VPS_Memory_Manager.pid",
-    'appStopFile' => $system_path . "/var/run/DreamHost_VPS_Memory_Manager/stop",
-    'usePEAR' => false,
-    'appRunAsUID' => DAEMON_USER,
-    'appRunAsGID' => DAEMON_GROUP,
-);
- 
+  'appName' => 'DreamHost_VPS_Memory_Manager',
+  'appDir' => dirname(__FILE__),
+  'appDescription' => 'Monitors and manages memory for a DreamHost Web VPS.',
+  'authorName' => 'JuanJose Galvez',
+  'authorEmail' => 'jj@gimmesoda.com',
+  'sysMaxExecutionTime' => '0',
+  'sysMaxInputTime' => '0',
+  'sysMemoryLimit' => '128M',
+  'logLocation' => $system_path . "/var/logs/memory",
+  'appPidLocation' => $system_path . "/var/run/DreamHost_VPS_Memory_Manager/DreamHost_VPS_Memory_Manager.pid",
+  'appStopFile' => $system_path . "/var/run/DreamHost_VPS_Memory_Manager/stop",
+  'usePEAR' => false,
+  'appRunAsUID' => DAEMON_USER,
+  'appRunAsGID' => DAEMON_GROUP,
+  );
+
 System_Daemon::setOptions($options);
 
 $template->assign("application_name", $application_name);

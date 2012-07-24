@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{$application_name} Install</title>
+	<title>{$application_name} Install</title>
 	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link type="text/css" rel='stylesheet' href="templates/amazing/css/style.css"/>
-    <link type="text/css" rel='stylesheet' href="templates/amazing/css/install.css"/>
+	<link type="text/css" rel='stylesheet' href="templates/amazing/css/style.css"/>
+	<link type="text/css" rel='stylesheet' href="templates/amazing/css/install.css"/>
 </head>
 <body>
 	<div id="wrapper">
@@ -24,8 +24,8 @@
 					<span>Repeat Password:</span><input type="password" name="password2" id="password2" value="" />
 					<span>Email Address:</span><input type="text" name="email" id="email" value="" />
 					<p>Need help? <a href="mailto:jj@gimmesoda.com">Contact JJ.</a></p>
-                    <input type="hidden" name="action" id="action" value="install" />
-                    <input type="hidden" name="do" id="do" value="write" />
+					<input type="hidden" name="action" id="action" value="install" />
+					<input type="hidden" name="do" id="do" value="write" />
 					<button type="submit" name="configbutton" value="Config">Configure</button>
 				</div>
 			</form>

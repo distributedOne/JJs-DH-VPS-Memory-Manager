@@ -41,7 +41,7 @@ class DreamHost_API {
     self::$api_url = $api_url;
     self::$unique_prefix = $unique_prefix;
   }
-    
+  
   /**
    * execute_command function
    * @return boolean
@@ -137,7 +137,7 @@ class DreamHost_API {
             self::$extra_arguments[$cnt] = array($key=>$value);
             $found = true;
           }
-        $cnt++;
+          $cnt++;
         }
       }
       
@@ -173,7 +173,7 @@ class DreamHost_API {
     curl_setopt($curl_handle, CURLOPT_URL, self::$final_url);
     curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl_handle, CURLOPT_HEADER, 0);
-   
+    
     $api_results = curl_exec($curl_handle);
     $request_info = curl_getinfo($curl_handle);
 
@@ -227,50 +227,50 @@ class DreamHost_API {
     $items = array();
     
     if(!is_object($obj)) return $items;
-        
+    
     $child = (array)$obj;
     
     if(sizeof($child)>1) {
-        foreach($child as $aa=>$bb) {
-            if(is_array($bb)) {
-                foreach($bb as $ee=>$ff) {
-                    if(!is_object($ff)) {
-                        $items[$aa][$ee] = $ff;
-                    } else
-                    if(get_class($ff)=='SimpleXMLElement') {
-                        $items[$aa][$ee] = self::xmlobj2array($ff,$level+1);
-                    }
-                }
+      foreach($child as $aa=>$bb) {
+        if(is_array($bb)) {
+          foreach($bb as $ee=>$ff) {
+            if(!is_object($ff)) {
+              $items[$aa][$ee] = $ff;
             } else
-            if(!is_object($bb)) {
-                $items[$aa] = $bb;
-            } else
-            if(get_class($bb)=='SimpleXMLElement') {
-                $items[$aa] = self::xmlobj2array($bb,$level+1);
+            if(get_class($ff)=='SimpleXMLElement') {
+              $items[$aa][$ee] = self::xmlobj2array($ff,$level+1);
             }
+          }
+        } else
+        if(!is_object($bb)) {
+          $items[$aa] = $bb;
+        } else
+        if(get_class($bb)=='SimpleXMLElement') {
+          $items[$aa] = self::xmlobj2array($bb,$level+1);
         }
+      }
     } else
     if(sizeof($child)>0) {
-        foreach($child as $aa=>$bb) {
-            if(!is_array($bb)&&!is_object($bb)) {
-                $items[$aa] = $bb;
+      foreach($child as $aa=>$bb) {
+        if(!is_array($bb)&&!is_object($bb)) {
+          $items[$aa] = $bb;
+        } else
+        if(is_object($bb)) {
+          $items[$aa] = self::xmlobj2array($bb,$level+1);
+        } else {
+          foreach($bb as $cc=>$dd) {
+            if(!is_object($dd)) {
+              $items[$obj->getName()][$cc] = $dd;
             } else
-            if(is_object($bb)) {
-                $items[$aa] = self::xmlobj2array($bb,$level+1);
-            } else {
-                foreach($bb as $cc=>$dd) {
-                    if(!is_object($dd)) {
-                        $items[$obj->getName()][$cc] = $dd;
-                    } else
-                    if(get_class($dd)=='SimpleXMLElement') {
-                        $items[$obj->getName()][$cc] = self::xmlobj2array($dd,$level+1);
-                    }
-                }
+            if(get_class($dd)=='SimpleXMLElement') {
+              $items[$obj->getName()][$cc] = self::xmlobj2array($dd,$level+1);
             }
+          }
         }
+      }
     }
     return $items;
-    }
+  }
 
 
 }
@@ -666,7 +666,7 @@ class DreamHost_MySQL_Commands extends DreamHost_API {
     parent::$command = "mysql-list_users";
     return parent::execute_command();
   }
-    
+  
   public static function add_user($db, $user, $password, $select = null, $insert = null, $update = null, $delete = null, $create = null, $drop = null, $index = null, $alter = null, $hostnames = null) {
     parent::$command = "mysql-add_user";
     parent::add_argument("db", $db);
@@ -885,7 +885,7 @@ class DreamHost_Service_Control_Commands extends DreamHost_API {
  * This class contains the User Commands
  */
 class DreamHost_User_Commands extends DreamHost_API {
-    
+  
   public static function add_user($type, $username, $gecos, $server, $shell_type, $password = null, $enhanced_security = null, $billing_cycle = null) {
     parent::$command = "user-add_user";
     parent::add_argument("type", $type);

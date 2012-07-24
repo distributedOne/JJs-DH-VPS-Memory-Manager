@@ -16,12 +16,9 @@ class Gimme_Cron {
     public static $cron_contents;
 
     public function __construct() {
-    
         self::$cron_bin = trim(shell_exec('which crontab'));
         self::$cron_tmp = tempnam("/tmp", "cron_");
-
         $this->get_cron_value();
-
     }
     
     public function get_bin() {
@@ -33,55 +30,43 @@ class Gimme_Cron {
     }
     
     public function add_line($add) {
-
         $this->get_cron_value();
         $output = self::$cron_contents . "\n" . $add . "\n";
-
         if(file_put_contents(self::$cron_tmp, $output) === false) {
             return false;
         } else {
             exec(self::$cron_bin . " " . self::$cron_tmp);
         }
-
         return $output;
-
     }
     
     public function remove_line($remove) {
-
         $this->get_cron_value();
         $output = "";
         $lines = explode("\n", self::$cron_contents);
-
         foreach($lines as $line) {
             if($line != $remove) {
                 $output .= $line . "\n";
             }
         }
-
         if(file_put_contents(self::$cron_tmp, $output) === false) {
             return false;
         } else {
             exec(self::$cron_bin . " " . self::$cron_tmp);
         }
-
         return $output;
-
     }
     
     public function find_line($check) {
         $this->get_cron_value();
         $output = "";
         $lines = explode("\n", self::$cron_contents);
-
         foreach($lines as $line) {
             if($line == $check) {
                 return true;
             }
         }
-        
         return false;
-
     }
 
     public function empty_cron() {

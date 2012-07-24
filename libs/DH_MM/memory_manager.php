@@ -278,7 +278,7 @@ class MemoryManager {
   /* End Log Related Functions */
   
   /* Daemon Related Functions */
-    function stop_daemon() {
+  function stop_daemon() {
     if (!$handle = fopen($this->stop_file, 'a')) {
       System_Daemon::info("Could not write stop file.");
       $success = true;
@@ -398,7 +398,7 @@ class MemoryManager {
      * Leaving code in place in case it ever gets patched
      * 
      */
-    
+
     $committed_AS = $this->get_committed_as();
 
     if($committed_AS < $suggest) {
