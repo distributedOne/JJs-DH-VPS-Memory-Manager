@@ -578,8 +578,8 @@ class MemoryManager {
       $hostname = exec('hostname');
     }
 
-    $user_info = explode("|", exec("whoami | awk {'print \"grep \" $1 \" /etc/passwd\"'} | sh | awk -F: {'print $3 \"|\" $4'}"));
-    
+    $user_info = array(posix_getuid(), posix_getgid());
+
     $sample_config = file_get_contents($this->config_sample_file);
 
     $new_config = str_replace("--DHAPIKEY--", $api_key, $sample_config); //Update sample first
