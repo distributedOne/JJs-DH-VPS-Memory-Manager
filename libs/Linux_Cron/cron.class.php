@@ -16,7 +16,7 @@ class Gimme_Cron {
     public static $cron_contents;
 
     public function __construct() {
-        self::$cron_bin = trim(shell_exec('which crontab'));
+        self::$cron_bin = "/usr/bin/crontab";
         self::$cron_tmp = tempnam("/tmp", "cron_");
         $this->get_cron_value();
     }
@@ -29,9 +29,11 @@ class Gimme_Cron {
         return self::$cron_tmp;
     }
     
-    public function add_line($add) {
+    public function add_line($add) { #add should be an array of lines to add
         $this->get_cron_value();
-        $output = self::$cron_contents . "\n" . $add . "\n";
+        foreach ($add as $line) {
+            $output .= self::$cron_contents . "\n" . $line . "\n";
+        }
         if(file_put_contents(self::$cron_tmp, $output) === false) {
             return false;
         } else {
@@ -40,32 +42,42 @@ class Gimme_Cron {
         return $output;
     }
     
-    public function remove_line($remove) {
+    public function remove_line($remove) { #remove should be an array
         $this->get_cron_value();
         $output = "";
         $lines = explode("\n", self::$cron_contents);
+        $found = 0;
         foreach($lines as $line) {
-            if($line != $remove) {
+            if($line != $remove[$found]) {
                 $output .= $line . "\n";
+            } else {
+                $found++;
             }
         }
-        if(file_put_contents(self::$cron_tmp, $output) === false) {
-            return false;
-        } else {
-            exec(self::$cron_bin . " " . self::$cron_tmp);
+        if($found > 0) {
+            if(file_put_contents(self::$cron_tmp, $output) === false) {
+                return false;
+            } else {
+                exec(self::$cron_bin . " " . self::$cron_tmp);
+            }
         }
         return $output;
     }
     
-    public function find_line($check) {
+    public function find_line($check) { #check should be an array!
         $this->get_cron_value();
         $output = "";
         $lines = explode("\n", self::$cron_contents);
+        $found = 0;
         foreach($lines as $line) {
-            if($line == $check) {
-                return true;
+            if($line == $check[$found]) {
+                $found++;
             }
         }
+        if($found === count($check)) {
+            return true;
+        }
+
         return false;
     }
 
