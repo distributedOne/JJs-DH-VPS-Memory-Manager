@@ -130,21 +130,24 @@ class MemoryManagerDaemon {
       {
         if(CHANGE_MEMORY == true)
         {
-          //Request is a decrease and is at least X seconds apart from the last resize, or suggestion is greater then totalMemory
-          if(($this->change_type = 'decrease' && ($this->time > ($this->last_resize + SECONDS_BEFORE_DECREASE))) || ($this->suggestion > $this->totalMemory))
+          if($this->suggestion > $this->usedMemory) //DreamHost does not allow a resize smaller than current used memory.
           {
-            System_Daemon::info('Change is requested. Current Memory: %s Used: %s Suggestion: %s', $this->totalMemory, $this->usedMemory, $this->suggestion);
-            $this->memory_manager->write_process_log($this->suggestion, $this->usedMemory, $this->cacheMemory);
-            if($this->vps_commands->set_size(HOSTNAME, $this->suggestion))
+            //Request is a decrease and is at least X seconds apart from the last resize, or suggestion is greater then totalMemory
+            if(($this->change_type = 'decrease' && ($this->time > ($this->last_resize + SECONDS_BEFORE_DECREASE))) || ($this->suggestion > $this->totalMemory))
             {
-              $results = $this->vps_commands->get_final_results();
-              $resize_token = $results['token'];
-              if($this->service_commands->progress($resize_token))
-                $this->__wait_on_resize($resize_token);
+              System_Daemon::info('Change is requested. Current Memory: %s Used: %s Suggestion: %s', $this->totalMemory, $this->usedMemory, $this->suggestion);
+              $this->memory_manager->write_process_log($this->suggestion, $this->usedMemory, $this->cacheMemory);
+              if($this->vps_commands->set_size(HOSTNAME, $this->suggestion))
+              {
+                $results = $this->vps_commands->get_final_results();
+                $resize_token = $results['token'];
+                if($this->service_commands->progress($resize_token))
+                  $this->__wait_on_resize($resize_token);
+              }
+            } else { //decrease before timelimit OR suggestion is less than current total memory
+              if(LOG_ALL)
+                System_Daemon::info('Change not requested per settings. Current Memory: %s Used: %s Suggestion: %s', $this->totalMemory, $this->usedMemory, $this->suggestion);
             }
-          } else { //decrease before timelimit OR suggestion is less than current total memory
-            if(LOG_ALL)
-              System_Daemon::info('Change not requested per settings. Current Memory: %s Used: %s Suggestion: %s', $this->totalMemory, $this->usedMemory, $this->suggestion);
           }
         } //End memory change allowed check
       } else { //Change is NOT needed
