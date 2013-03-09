@@ -26,6 +26,7 @@ require($system_path . "/libs/DH_API/dreamhost_api.php");
 require($system_path . "/libs/Smarty/custom.php");
 require($system_path . "/libs/Linux_Cron/cron.class.php");
 require($system_path . "/libs/System_Daemon/System/Daemon.php");
+require($system_path . "/libs/DH_MM/memory_manager_daemon.php");
 
 $template = new Smarty_DH_VPS_MM;
 $memory_manager = new MemoryManager;
