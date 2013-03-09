@@ -149,6 +149,8 @@ class MemoryManagerDaemon {
               if(LOG_ALL)
                 System_Daemon::info('Change not requested per settings. Current Memory: %s Used: %s Suggestion: %s', $this->totalMemory, $this->usedMemory, $this->suggestion);
             }
+          } else {
+            System_Daemon::info('Can not request a resize smaller than current memory usage. Current Memory: %s Used: %s Suggestion: %s', $this->totalMemory, $this->usedMemory, $this->suggestion);
           }
         } //End memory change allowed check
       } else { //Change is NOT needed
