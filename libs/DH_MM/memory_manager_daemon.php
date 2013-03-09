@@ -131,7 +131,7 @@ class MemoryManagerDaemon {
         if(CHANGE_MEMORY == true)
         {
           //Request is a decrease and is at least 30 mins apart from the last resize, or suggestion is greater then totalMemory
-          if($this->change_type = 'decrease' && ($this->time > ($this->last_resize + 1800)) || ($this->suggestion > $this->totalMemory))
+          if(($this->change_type = 'decrease' && ($this->time > ($this->last_resize + 1800))) || ($this->suggestion > $this->totalMemory))
           {
             System_Daemon::info('Change is requested. Current Memory: %s Used: %s Suggestion: %s', $this->totalMemory, $this->usedMemory, $this->suggestion);
             $this->memory_manager->write_process_log($this->suggestion, $this->usedMemory, $this->cacheMemory);
