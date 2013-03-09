@@ -116,6 +116,7 @@ class MemoryManagerDaemon {
 
     if($this->time >= $this->next_time) {
       $this->memory_manager->write_graph_log($this->time, $this->totalMemory, $this->availableMemory, $this->load_averages[0], $this->load_averages[1], $this->load_averages[2]);
+      $this->next_time = $this->time + (60 * 5);
     }
 
     $this->__check_resize();
