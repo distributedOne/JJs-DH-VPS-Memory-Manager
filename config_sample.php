@@ -25,6 +25,7 @@ define('IGNORE_CACHE', '--IGNORE_CACHE--');
 define('DAEMON_USER', '--DAEMON_USER--');
 define('DAEMON_GROUP', '--DAEMON_GROUP--');
 define('CHANGE_MEMORY', '--CHANGE_MEMORY--');
+define('SECONDS_BEFORE_DECREASE', 1800);
 
 # Contact Settings
 define('EMAIL_ON_RESIZE', '--EMAIL_ON_RESIZE--');

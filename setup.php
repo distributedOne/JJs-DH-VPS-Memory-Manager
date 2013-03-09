@@ -21,6 +21,10 @@ if($system_action != "install") {
   define('TEMPLATE', 'amazing'); //default template
 }
 
+#For older versions which don't define the defaults
+if(!defined('SECONDS_BEFORE_DECREASE'))
+  define('SECONDS_BEFORE_DECREASE', 1800);
+
 require($system_path . "/libs/DH_MM/memory_manager.php");
 require($system_path . "/libs/DH_API/dreamhost_api.php");
 require($system_path . "/libs/Smarty/custom.php");
