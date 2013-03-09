@@ -47,7 +47,9 @@ class MemoryManager {
     $this->template_folder = $system_path . "/templates/";
     $this->module_action = $module_action;
     $this->start_daemon_command = '/usr/local/php5/bin/php ' . $system_path . '/daemon.php >> ' . $this->error_file . ' 2>&1 &';
-    $this->cron_command = '*/5 * * * * ' . $this->start_daemon_command;
+    $this->cron_command = "#VPS Memory Manager" . "\n" . 'MAILTO=""' . "\n" . '*/5 * * * * ' . $this->start_daemon_command;
+    #legacy command - should be removed!
+    $this->old_cron_command = '*/5 * * * * ' . $this->start_daemon_command;
   }
   
   /* Command List Related Functions */
@@ -73,7 +75,12 @@ class MemoryManager {
     $command_list .= $clear_logs_command;
 
     $crontab = new Gimme_Cron;
-    $cron_installed = $crontab->find_line($this->cron_command);
+    $cron_installed = $crontab->find_line(explode("\n", $this->cron_command));
+
+    if(!$cron_installed == false) {
+      $cron_installed = $crontab->find_line(array($this->old_cron_command));
+    }
+
     if($cron_installed == false) {
         $cron_command = '<a href="#" onClick="install_cron();"><div id="Cron"><img src="templates/amazing/images/cron.png" alt="cron" /><span>Install Cron</span></div></a>';
     } else {
@@ -131,12 +138,13 @@ class MemoryManager {
   
   function add_cron() {
     $crontab = new Gimme_Cron;
-    $crontab->add_line($this->cron_command);
+    $crontab->add_line(explode("\n", $this->cron_command));
   }
 
   function remove_cron() {
     $crontab = new Gimme_Cron;
-    $crontab->remove_line($this->cron_command);
+    $crontab->remove_line(array($this->old_cron_command)); #here for old installs
+    $crontab->remove_line(explode("\n", $this->cron_command));
   }
   
   /* End Cron Related Functions */
@@ -411,7 +419,7 @@ class MemoryManager {
       }
     }
     
-    /* End Committed_AS Code */
+    /* End committed_AS Code */
     
     if(defined('MAX_MEMORY')) {
       if($suggest > MAX_MEMORY) {
