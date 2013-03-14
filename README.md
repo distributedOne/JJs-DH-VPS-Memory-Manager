@@ -50,14 +50,14 @@ When you register make sure that your selected access level's are set to "Read a
 
 Upgrading!
 -----------------
-Until I work out a decent auto-upgrade feature there are only two ways to get upgrades in place.
+Until I work out a decent auto-upgrade feature there are currently two ways to get upgrades in place.
 
 1) Download the new files and upload them over the current files (no logs should be lost and your config will remain in place)
-2) If you used 'git clone' to grab the application just run 'git push' from the applications directory.
+2) If you used 'git clone' to grab the application just run 'git pull' from the application's directory.
 
 Next you'll want to make a copy of your config.php file, then delete the copy on your server. Visit the memory manager url and you'll see the installation page, copy your API key from the old config and enter the user/pass and email address you want to use. The new config with the new definitions will be written by the application.
 
-Restart the application daemon as explained below.
+Once that is done restart the application daemon as explained below.
 
 Restart the Daemon
 -----------------
