@@ -25,6 +25,21 @@ if($system_action != "install") {
 if(!defined('SECONDS_BEFORE_DECREASE'))
   define('SECONDS_BEFORE_DECREASE', 1800);
 
+if(!defined('LOG_EVERY_X_MINUTES'))
+  define('LOG_EVERY_X_MINUTES', 5);
+
+if(!defined('MAX_CHECKS_BEFORE_GIVING_UP'))
+  define('MAX_CHECKS_BEFORE_GIVING_UP', 50);
+
+if(!defined('SECONDS_TO_WAIT_BETWEEN_MEMORY_CHECKS'))
+  define('SECONDS_TO_WAIT_BETWEEN_MEMORY_CHECKS', 5);
+
+if(!defined('SECONDS_TO_WAIT_BETWEEN_RESIZE_STATUS_CHECKS'))
+  define('SECONDS_TO_WAIT_BETWEEN_RESIZE_STATUS_CHECKS', 5);
+
+if(!defined('DAEMON_TIMEZONE'))
+  define('DAEMON_TIMEZONE', 'America/Los_Angeles');
+
 require($system_path . "/libs/DH_MM/memory_manager.php");
 require($system_path . "/libs/DH_API/dreamhost_api.php");
 require($system_path . "/libs/Smarty/custom.php");

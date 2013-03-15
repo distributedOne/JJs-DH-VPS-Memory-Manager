@@ -39,7 +39,7 @@ class MemoryManagerDaemon {
       $this->__do_the_needful();
       $this->memory_manager->trim_logs();
       $this->memory_manager->check_for_stop_file();
-      System_Daemon::iterate(5);
+      System_Daemon::iterate(SECONDS_TO_WAIT_BETWEEN_MEMORY_CHECKS);
       $this->loop++;
     }
   }
@@ -48,7 +48,7 @@ class MemoryManagerDaemon {
   {
     global $argv;
 
-    date_default_timezone_set("America/Los_Angeles"); //Use DreamHost TZ!
+    date_default_timezone_set(DAEMON_TIMEZONE);
 
     $this->loop = 1;
     $this->stopFileFound = false;
@@ -111,12 +111,12 @@ class MemoryManagerDaemon {
     if($this->loop == 1) {
       System_Daemon::info('Daemon Started. Current Memory: %s Used: %s Suggestion: %s', $this->totalMemory, $this->usedMemory, $this->suggestion);
       $this->memory_manager->write_graph_log($this->time, $this->totalMemory, $this->availableMemory, $this->load_averages[0], $this->load_averages[1], $this->load_averages[2]);
-      $this->next_time = $this->time + (60 * 5);
+      $this->next_time = $this->time + (60 * LOG_EVERY_X_MINUTES);
     }
 
     if($this->time >= $this->next_time) {
       $this->memory_manager->write_graph_log($this->time, $this->totalMemory, $this->availableMemory, $this->load_averages[0], $this->load_averages[1], $this->load_averages[2]);
-      $this->next_time = $this->time + (60 * 5);
+      $this->next_time = $this->time + (60 * LOG_EVERY_X_MINUTES);
     }
 
     $this->__check_resize();
@@ -174,20 +174,17 @@ class MemoryManagerDaemon {
 
   private function __wait_on_resize($resize_token)
   {
-
     $status = null;
     $checks = 0;
-
     while($status != 'success' && $status != 'failure')
     {
-
       $checks++;
       $service_results = $this->service_commands->get_final_results();
       $status = $service_results['status'];
       System_Daemon::info('Current status of resize request: %s', $status);
       $this->memory_manager->check_for_stop_file();
 
-      if($checks >= 50 && $status != 'success') {
+      if($checks >= MAX_CHECKS_BEFORE_GIVING_UP && $status != 'success') {
         $this->memory_manager->info('API taking too long!');
         $status = 'failure';
       }
@@ -210,11 +207,8 @@ class MemoryManagerDaemon {
             System_Daemon::info('CURL encountered an error. %s ', $error_array['message']);
         }
       }
-
-      System_Daemon::iterate(5); //wait 5 seconds before the next check
-
+      System_Daemon::iterate(SECONDS_TO_WAIT_BETWEEN_RESIZE_STATUS_CHECKS);
     }
-
-  }             
+  }
 
 }
