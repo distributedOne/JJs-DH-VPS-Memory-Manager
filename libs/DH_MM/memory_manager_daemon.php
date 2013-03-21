@@ -15,7 +15,7 @@
 class MemoryManagerDaemon {
 
   protected $memory_manager, $vps_commands, $service_commands;
-  private $loop, $time, $next_time, $tomorrow, $long_sleep, $last_resize, $change_type;
+  private $loop, $time, $next_time, $tomorrow, $long_sleep, $last_resize, $change_type, $resize_status;
   private $totalMemory, $usedMemory, $availableMemory, $suggestion, $load_averages, $cacheMemory;
 
   public function __construct() {
@@ -142,8 +142,7 @@ class MemoryManagerDaemon {
               {
                 $results = $this->vps_commands->get_final_results();
                 $resize_token = $results['token'];
-                if($this->service_commands->progress($resize_token))
-                  $this->__wait_on_resize($resize_token);
+                $this->__wait_on_resize($resize_token);
               }
             } else { //decrease before timelimit OR suggestion is less than current total memory
               if(LOG_ALL)
@@ -174,22 +173,25 @@ class MemoryManagerDaemon {
 
   private function __wait_on_resize($resize_token)
   {
-    $status = null;
+    $this->resize_status = null;
     $checks = 0;
-    while($status != 'success' && $status != 'failure')
+    while($this->resize_status != 'success' && $this->resize_status != 'failure')
     {
       $checks++;
-      $service_results = $this->service_commands->get_final_results();
-      $status = $service_results['status'];
-      System_Daemon::info('Current status of resize request: %s', $status);
-      $this->memory_manager->check_for_stop_file();
-
-      if($checks >= MAX_CHECKS_BEFORE_GIVING_UP && $status != 'success') {
-        $this->memory_manager->info('API taking too long!');
-        $status = 'failure';
+      if($this->service_commands->progress($resize_token))
+      {
+        $service_results = $this->service_commands->get_final_results();
+        $this->resize_status = $service_results['status'];
+        System_Daemon::info('Current status of resize request: %s', $this->resize_status);
+        $this->memory_manager->check_for_stop_file();
       }
 
-      if($status == 'success')
+      if($checks >= MAX_CHECKS_BEFORE_GIVING_UP && $this->resize_status != 'success') {
+        $this->memory_manager->info('API taking too long!');
+        $this->resize_status = 'failure';
+      }
+
+      if($this->resize_status == 'success')
       {
         $this->last_resize = time();
         $last_type = ($this->suggestion > $this->totalMemory) ? 'increase' : 'decrease';
