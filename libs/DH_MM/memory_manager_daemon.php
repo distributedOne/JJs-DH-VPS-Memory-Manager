@@ -34,7 +34,7 @@ class MemoryManagerDaemon {
       $this->usedMemory = $this->memory_manager->get_used_memory();
       $this->cacheMemory = $this->memory_manager->get_cached_memory();
       $this->load_averages = $this->memory_manager->get_load_average();
-      $this->availableMemory = $this->totalMemory - $usedMemory;
+      $this->availableMemory = $this->totalMemory - $this->usedMemory;
       $this->change_type = ($this->suggestion > $this->totalMemory) ? 'increase' : 'decrease';
       $this->__do_the_needful();
       $this->memory_manager->trim_logs();
